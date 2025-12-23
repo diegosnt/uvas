@@ -1,0 +1,23 @@
+{
+  "name": "Calculadora de UVAs",
+  "short_name": "UVAs",
+  "description": "Calculadora de UVAs con conversión automática a dólares usando datos del BCRA",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#8b5cf6",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["finance", "utilities"],
+  "lang": "es-AR",
+  "dir": "ltr",
+  "scope": "/",
+  "screenshots": []
+}
