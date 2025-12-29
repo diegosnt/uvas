@@ -45,6 +45,22 @@ function formatearNumero(numero, decimales = 2) {
 }
 
 /**
+ * Formatea una fecha ISO a formato YYYY-MM-DD HH:mm
+ * @param {string} fechaISO - Fecha en formato ISO
+ * @returns {string} Fecha y hora formateada
+ */
+function formatearFechaHora(fechaISO) {
+  const fecha = new Date(fechaISO);
+  const year = fecha.getFullYear();
+  const month = String(fecha.getMonth() + 1).padStart(2, '0');
+  const day = String(fecha.getDate()).padStart(2, '0');
+  const hours = String(fecha.getHours()).padStart(2, '0');
+  const minutes = String(fecha.getMinutes()).padStart(2, '0');
+
+  return `${year}-${month}-${day} ${hours}:${minutes}`;
+}
+
+/**
  * Muestra un mensaje de error en la interfaz
  */
 function mostrarError(mensaje) {
@@ -86,9 +102,16 @@ async function cargarDatos() {
     if (cotizacionUSD && cotizacionUSD.cotizacion && valorEnDolares) {
       document.getElementById('cotizacionUSD').textContent = '$' + formatearNumero(cotizacionUSD.cotizacion);
       document.getElementById('valorUnitarioUSD').textContent = 'U$S ' + formatearNumero(valorEnDolares);
+
+      if (cotizacionUSD.fecha) {
+        document.getElementById('fechaUSD').textContent = formatearFechaHora(cotizacionUSD.fecha);
+      } else {
+        document.getElementById('fechaUSD').textContent = 'No disponible';
+      }
     } else {
       document.getElementById('cotizacionUSD').textContent = 'No disponible';
       document.getElementById('valorUnitarioUSD').textContent = 'No disponible';
+      document.getElementById('fechaUSD').textContent = 'No disponible';
     }
   } catch (error) {
     console.error('Error al cargar datos:', error);
@@ -153,9 +176,21 @@ async function calcular() {
 // Cargar datos al inicio
 cargarDatos();
 
+// Habilitar/deshabilitar botón según contenido del input
+const inputCantidad = document.getElementById('cantidad');
+const calcularBtn = document.getElementById('calcularBtn');
+
+function actualizarEstadoBoton() {
+  const valor = parseFloat(inputCantidad.value);
+  calcularBtn.disabled = !valor || valor <= 0;
+}
+
+// Verificar estado del botón al escribir
+inputCantidad.addEventListener('input', actualizarEstadoBoton);
+
 // Permitir calcular con Enter
-document.getElementById('cantidad').addEventListener('keypress', function(e) {
-  if (e.key === 'Enter') {
+inputCantidad.addEventListener('keypress', function(e) {
+  if (e.key === 'Enter' && !calcularBtn.disabled) {
     calcular();
   }
 });

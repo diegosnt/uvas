@@ -1,17 +1,17 @@
-# 🍇 Calculadora de UVAs
+# 🍇 uvas-ar
 
-Aplicación web moderna para calcular valores de UVAs (Unidad de Valor Adquisitivo) con conversión automática a dólares estadounidenses, utilizando las APIs oficiales del Banco Central de la República Argentina (BCRA).
+Calculadora de UVAs - Aplicación web moderna para calcular valores de UVAs (Unidad de Valor Adquisitivo) con conversión automática a dólares estadounidenses.
 
 ## ✨ Características
 
-- 📊 Consulta automática del valor actual de UVAs desde la API del BCRA
-- 💵 Obtención de la cotización del dólar en tiempo real
+- 📊 Consulta automática del valor actual de UVAs
+- 💵 Obtención de la cotización del dólar oficial en tiempo real
 - 🔄 Conversión automática de pesos argentinos a dólares
 - 📱 Diseño responsive optimizado para móviles, tablets y desktop
 - 🌓 Modo oscuro/claro con persistencia de preferencia
 - 🎨 Formato de números con separadores de miles (estilo argentino)
-- ⚡ Interfaz moderna con animaciones suaves
-- 🔒 Fuentes y recursos locales (sin dependencias externas excepto APIs del BCRA)
+- ⚡ Interfaz moderna y minimalista
+- 🔒 Fuentes y recursos locales
 
 ## 📁 Estructura del Proyecto
 
@@ -21,7 +21,7 @@ uvas/
 │   ├── env.js          # Variables de entorno
 │   └── https.js        # Configuración HTTPS
 ├── services/           # Lógica de negocio
-│   └── bcraService.js  # Servicio para APIs del BCRA
+│   └── bcraService.js  # Servicio para obtener datos de UVAs y cotización USD
 ├── routes/             # Rutas de la aplicación
 │   ├── index.js        # Rutas principales
 │   └── api.js          # Rutas de la API REST
@@ -62,16 +62,16 @@ pnpm install
 # Configuración del servidor
 PORT=3003
 
-# URLs de las APIs del BCRA
-BCRA_API_BASE_URL=<URL_BASE_API_BCRA>
-BCRA_ESTADISTICAS_URL=<URL_ESTADISTICAS_BCRA>
-BCRA_COTIZACIONES_USD_URL=<URL_COTIZACIONES_USD_BCRA>
+# URLs de las APIs
+API_BASE_URL=<URL_BASE_API>
+ESTADISTICAS_URL=<URL_ESTADISTICAS_UVA>
+API_URL=<URL_COTIZACION_DOLAR>
 
 # Configuración SSL
 REJECT_UNAUTHORIZED=false
 ```
 
-**Nota:** Las URLs de las APIs del BCRA deben configurarse en el archivo `.env` por seguridad.
+**Nota:** Las URLs de las APIs deben configurarse en el archivo `.env` por seguridad.
 
 ## 💻 Uso
 
@@ -89,33 +89,17 @@ pnpm dev
 
 El servidor se iniciará en `http://localhost:3003` (por defecto).
 
-### Endpoints disponibles
-
-La aplicación expone un conjunto mínimo de endpoints por seguridad:
-
-#### Interfaz Web
-- `GET /` - Página principal con la calculadora interactiva
-
-#### API REST
-- `GET /api/valor` - **Único endpoint público**
-  - Devuelve: valor de UVAs, cotización USD y conversión a dólares
-  - Usado por el frontend para cargar datos actualizados
-
-#### Testing/Debug
-- `GET /bcra` - Endpoint de testing (consulta directa a APIs del BCRA)
-  - Solo para pruebas manuales durante desarrollo
-
 ### Ejemplo de respuesta de la API
 
 ```json
 {
-  "fecha": "2025-12-23",
+  "fecha": "2025-12-28",
   "valor": 1696.95,
   "cotizacionUSD": {
-    "fecha": "2025-12-22",
-    "cotizacion": 1452
+    "fecha": "2025-12-28T17:00:00.000Z",
+    "cotizacion": 1475
   },
-  "valorEnDolares": 1.17
+  "valorEnDolares": 1.15
 }
 ```
 
@@ -124,9 +108,9 @@ La aplicación expone un conjunto mínimo de endpoints por seguridad:
 | Variable | Descripción | Requerido |
 |----------|-------------|-----------|
 | `PORT` | Puerto del servidor | No (default: 3003) |
-| `BCRA_API_BASE_URL` | URL base de la API del BCRA | Sí |
-| `BCRA_ESTADISTICAS_URL` | URL de estadísticas monetarias | Sí |
-| `BCRA_COTIZACIONES_USD_URL` | URL de cotización del dólar | Sí |
+| `API_BASE_URL` | URL base de la API | Sí |
+| `ESTADISTICAS_URL` | URL para obtener valores de UVAs | Sí |
+| `API_URL` | URL para obtener cotización del dólar oficial | Sí |
 | `REJECT_UNAUTHORIZED` | Validación SSL/TLS | No (default: false) |
 
 ## 🛠️ Tecnologías
@@ -162,12 +146,12 @@ La aplicación expone un conjunto mínimo de endpoints por seguridad:
 - Estados focus claros para navegación por teclado
 - Labels descriptivos para lectores de pantalla
 
-## 📡 APIs Utilizadas
+## 📡 Fuentes de Datos
 
-Este proyecto consume las APIs públicas del BCRA:
+La aplicación obtiene información actualizada de:
 
-1. **API de Estadísticas Monetarias**: Para obtener el valor de las UVAs
-2. **API de Estadísticas Cambiarias**: Para obtener la cotización del dólar
+1. Valores de UVAs (Unidad de Valor Adquisitivo)
+2. Cotización oficial del dólar estadounidense
 
 ## 🏗️ Desarrollo
 
@@ -195,16 +179,13 @@ Esta separación permite:
 
 ### Principios de seguridad implementados:
 
-- **Superficie mínima de ataque**: Solo un endpoint público (`/api/valor`)
 - **Variables de entorno**: URLs de APIs centralizadas en `.env` (no versionado)
-- **Sin dependencias externas**: Fuentes y recursos 100% locales (excepto APIs del BCRA)
-- **Sin información sensible**: Solo datos públicos del BCRA
+- **Sin dependencias externas**: Fuentes y recursos 100% locales
+- **Sin información sensible**: Solo datos públicos
 - **HTTPS configurado**: Soporte para certificados SSL/TLS
 - **Sin exposición de claves**: Las URLs de las APIs no se exponen en el frontend
+- **Botón de cálculo inteligente**: Solo habilitado cuando hay valores válidos
 
-### Endpoints eliminados por seguridad:
-- ❌ `/api/cotizacion-usd` - Eliminado (redundante)
-- ❌ `/api/debug-cotizacion` - Eliminado (solo debug)
 
 ## 📄 Licencia
 

@@ -81,12 +81,23 @@ body {
   gap: 1rem;
 }
 
+.title-section {
+  flex: 1;
+}
+
 h1 {
   color: var(--text-primary);
   font-size: 1.75rem;
   font-weight: 700;
   letter-spacing: -0.02em;
-  flex: 1;
+  margin-bottom: 0.25rem;
+}
+
+.subtitle {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin: 0;
 }
 
 /* ========== Theme Toggle ========== */
@@ -165,14 +176,15 @@ button:not(.theme-toggle) {
   transition: all 0.3s ease;
   box-shadow: 0 4px 12px var(--shadow);
   font-family: inherit;
+  margin-bottom: 1rem;
 }
 
-button:not(.theme-toggle):hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px var(--shadow-lg);
+button:not(.theme-toggle):disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
-button:not(.theme-toggle):active {
+button:not(.theme-toggle):active:not(:disabled) {
   transform: translateY(0);
 }
 
@@ -187,7 +199,7 @@ button:not(.theme-toggle):active {
 }
 
 .info p {
-  margin: 0.35rem 0;
+  margin: 0.05rem 0;
   color: var(--text-secondary);
   display: flex;
   align-items: center;
@@ -282,7 +294,7 @@ button:not(.theme-toggle):active {
   display: flex;
   align-items: center;
   position: relative;
-  margin: 0.35rem 0;
+  margin: 0.05rem 0;
 }
 
 .result strong {
@@ -347,7 +359,7 @@ button:not(.theme-toggle):active {
   .info p,
   .result p {
     font-size: 0.9rem;
-    margin: 0.3rem 0;
+    margin: 0.05rem 0;
   }
 
   button:not(.theme-toggle) {
@@ -388,7 +400,7 @@ button:not(.theme-toggle):active {
   .info p,
   .result p {
     font-size: 0.85rem;
-    margin: 0.25rem 0;
+    margin: 0.05rem 0;
   }
 
   .result {

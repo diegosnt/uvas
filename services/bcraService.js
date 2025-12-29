@@ -11,7 +11,7 @@ const { obtenerFechaActual } = require('../utils/dateUtils');
 async function obtenerValorUvas(fecha = null) {
   try {
     const fechaConsulta = fecha || obtenerFechaActual();
-    const url = `${config.bcraEstadisticasUrl}?desde=${fechaConsulta}&hasta=${fechaConsulta}&limit=1`;
+    const url = `${config.estadisticasUrl}?desde=${fechaConsulta}&hasta=${fechaConsulta}&limit=1`;
 
     const response = await axios.get(url, {
       httpsAgent: createHttpsAgent()
@@ -37,12 +37,12 @@ async function obtenerValorUvas(fecha = null) {
 }
 
 /**
- * Obtiene la cotización del dólar desde la API del BCRA
- * @returns {Promise<Object>} Datos de cotización USD
+ * Obtiene la cotización del dólar desde API
+ * @returns {Promise<Object>} Datos de cotización USD oficial
  */
 async function obtenerCotizacionUSD() {
   try {
-    const url = config.bcraCotizacionesUsdUrl;
+    const url = config.apiUrl;
 
     const response = await axios.get(url, {
       httpsAgent: createHttpsAgent()
@@ -50,25 +50,19 @@ async function obtenerCotizacionUSD() {
 
     const data = response.data;
 
-    if (!data || !data.results || data.results.length === 0) {
+    if (!data || !Array.isArray(data)) {
       throw new Error('No se encontraron datos de cotización USD');
     }
 
-    const ultimaCotizacion = data.results[data.results.length - 1];
+    const cotizacionOficial = data.find(d => d.nombre === 'Oficial');
 
-    if (!ultimaCotizacion.detalle || ultimaCotizacion.detalle.length === 0) {
-      throw new Error('No se encontraron detalles de cotización USD');
-    }
-
-    const detalleUSD = ultimaCotizacion.detalle.find(d => d.codigoMoneda === 'USD');
-
-    if (!detalleUSD || !detalleUSD.tipoCotizacion) {
-      throw new Error('No se encontró cotización para USD');
+    if (!cotizacionOficial || !cotizacionOficial.venta) {
+      throw new Error('No se encontró cotización oficial de venta para USD');
     }
 
     return {
-      fecha: ultimaCotizacion.fecha,
-      cotizacion: detalleUSD.tipoCotizacion
+      fecha: cotizacionOficial.fechaActualizacion,
+      cotizacion: cotizacionOficial.venta
     };
   } catch (error) {
     console.error('Error al obtener cotización USD:', error.message);

@@ -41,23 +41,28 @@ function renderHome() {
     <body>
       <div class="container">
         <div class="header">
-          <h1>🍇 Calculadora de UVAs</h1>
+          <div class="title-section">
+            <h1>🍇 uvas-ar</h1>
+            <p class="subtitle">  Calculadora de UVAs</p>
+          </div>
+
           <button id="themeToggle" class="theme-toggle" aria-label="Cambiar tema">
             <span class="theme-icon">🌙</span>
           </button>
         </div>
 
         <div class="input-group">
-          <label for="cantidad">Cantidad de UVAs:</label>
+
           <input type="number" id="cantidad" placeholder="Ingrese la cantidad" min="0" step="0.01">
         </div>
 
-        <button onclick="calcular()">Calcular Valor Total</button>
+        <button id="calcularBtn" onclick="calcular()" disabled>Calcular Valor</button>
 
         <div class="info" id="apiInfo">
-          <p><strong>Fecha:</strong> <span id="fecha">Cargando...</span></p>
+          <p><strong>Fecha Cotización UVA:</strong> <span id="fecha">Cargando...</span></p>
           <p><strong>Cotización UVA:</strong> <span id="valorUnitario">$Cargando...</span></p>
           <p><strong>Cotización UVA:</strong> <span id="valorUnitarioUSD">U$S Cargando...</span></p>
+          <p><strong>Fecha Cotización USD:</strong> <span id="fechaUSD">Cargando...</span></p>
           <p><strong>Cotización USD:</strong> <span id="cotizacionUSD">$Cargando...</span></p>
         </div>
 
@@ -65,9 +70,9 @@ function renderHome() {
 
         <div class="result" id="result">
           <h2>Resultado</h2>
-          <p><strong>Cantidad:</strong> <span id="cantidadResult"></span></p>
-          <p><strong>Total:</strong> <span id="total">$0.00</span></p>
-          <p><strong>Total:</strong> <span id="totalUSD">U$S 0.00</span></p>
+          <p><strong>Cantidad de UVAs:</strong> <span id="cantidadResult"></span></p>
+          <p><strong>Pesos:</strong> <span id="total">$0.00</span></p>
+          <p><strong>Dolares:</strong> <span id="totalUSD">U$S 0.00</span></p>
         </div>
       </div>
 
