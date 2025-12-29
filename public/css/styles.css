@@ -403,6 +403,10 @@ button:not(.theme-toggle):active:not(:disabled) {
     margin: 0.05rem 0;
   }
 
+  .info strong {
+    font-size: 0.8rem;
+  }
+
   .result {
     margin-top: 1rem;
   }
