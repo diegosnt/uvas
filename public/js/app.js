@@ -16,7 +16,7 @@ const initialTheme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
 // Aplicar tema inicial
 if (initialTheme === 'dark') {
   html.setAttribute('data-theme', 'dark');
-  themeIcon.textContent = '☀️';
+  themeIcon.innerHTML = '<img src="/images/sun.svg" alt="Cambiar a modo claro">';
 }
 
 // Toggle theme
@@ -28,7 +28,9 @@ themeToggle.addEventListener('click', () => {
   localStorage.setItem('theme', newTheme);
 
   // Cambiar icono
-  themeIcon.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+  themeIcon.innerHTML = newTheme === 'dark'
+    ? '<img src="/images/sun.svg" alt="Cambiar a modo claro">'
+    : '<img src="/images/moon.svg" alt="Cambiar a modo oscuro">';
 });
 
 /**
@@ -67,7 +69,7 @@ function mostrarError(mensaje) {
   const apiInfo = document.getElementById('apiInfo');
   apiInfo.innerHTML = `
     <div style="text-align: center; padding: 1rem; color: var(--text-secondary);">
-      <p style="font-size: 2rem; margin-bottom: 0.5rem;">⚠️</p>
+      <p style="margin-bottom: 0.5rem;"><img src="/images/warning.svg" alt="Advertencia" style="width: 48px; height: 48px;"></p>
       <p style="font-weight: 600; margin-bottom: 0.5rem;">${mensaje}</p>
       <p style="font-size: 0.85rem;">Por favor, intenta recargar la página.</p>
     </div>
@@ -162,7 +164,7 @@ async function calcular() {
     // Mostrar mensaje de error en lugar del resultado
     result.innerHTML = `
       <div style="text-align: center; padding: 1rem;">
-        <p style="font-size: 2rem; margin-bottom: 0.5rem;">❌</p>
+        <p style="margin-bottom: 0.5rem;"><img src="/images/error.svg" alt="Error" style="width: 48px; height: 48px;"></p>
         <p style="font-weight: 600; color: var(--text-primary);">Error al calcular</p>
         <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.5rem;">
           Por favor, verifica los datos e intenta nuevamente.

@@ -42,12 +42,12 @@ function renderHome() {
       <div class="container">
         <div class="header">
           <div class="title-section">
-            <h1>🍇 uvas-ar</h1>
+            <h1><img src="/images/grape.svg" alt="Uva" class="grape-icon"> uvas-ar</h1>
             <p class="subtitle">  Calculadora de UVAs</p>
           </div>
 
           <button id="themeToggle" class="theme-toggle" aria-label="Cambiar tema">
-            <span class="theme-icon">🌙</span>
+            <span class="theme-icon"><img src="/images/moon.svg" alt="Cambiar tema"></span>
           </button>
         </div>
 
@@ -59,10 +59,10 @@ function renderHome() {
         <button id="calcularBtn" onclick="calcular()" disabled>Calcular Valor</button>
 
         <div class="info" id="apiInfo">
-          <p><strong>Fecha Cotización UVA:</strong> <span id="fecha">Cargando...</span></p>
+          <p><strong>Fecha UVA:</strong> <span id="fecha">Cargando...</span></p>
           <p><strong>Cotización UVA:</strong> <span id="valorUnitario">$Cargando...</span></p>
           <p><strong>Cotización UVA:</strong> <span id="valorUnitarioUSD">U$S Cargando...</span></p>
-          <p><strong>Fecha Cotización USD:</strong> <span id="fechaUSD">Cargando...</span></p>
+          <p><strong>Fecha USD:</strong> <span id="fechaUSD">Cargando...</span></p>
           <p><strong>Cotización USD:</strong> <span id="cotizacionUSD">$Cargando...</span></p>
         </div>
 
